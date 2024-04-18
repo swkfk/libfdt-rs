@@ -45,6 +45,16 @@ void fdt_set_stdout_path(void *fdt, const char *p);
 
 void fdt_clear_stdout_path(void *fdt);
 
+int fdt_create_node(void *fdt, const char *path, const char *name);
+
+int fdt_add_property_string(void *fdt, int node, const char *name, const char *str);
+
+int fdt_add_property_u32(void *fdt, int node, const char *name, uint32_t val);
+
+int fdt_add_property_u64_array(void *fdt, int node, const char *name, uint64_t *values, int len);
+
+int fdt_add_property_u32_array(void *fdt, int node, const char *name, uint32_t *values, int len);
+
 void fdt_enlarge(void *fdt);
 
 uint64_t fdt_size(void *fdt);
