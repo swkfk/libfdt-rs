@@ -36,7 +36,7 @@ int fdt_disable_node(void *fdt, const char *path)
 int fdt_create_node(void *fdt, const char *path, const char *name) {
   int root = fdt_path_offset(fdt, path);
   if (root < 0) {
-    return -1;
+    return root;
   }
   int node = fdt_add_subnode(fdt, root, name);
   return node;
