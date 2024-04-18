@@ -32,6 +32,52 @@ int fdt_disable_node(void *fdt, const char *path)
   return 0;
 }
 
+// pass dtb path, and we can get a int pointer to the tree node
+int fdt_create_node(void *fdt, const char *path, const char *name) {
+  int root = fdt_path_offset(fdt, path);
+  if (root < 0) {
+    return -1;
+  }
+  int node = fdt_add_subnode(fdt, root, name);
+  return node;
+}
+
+int fdt_add_property_string(void *fdt, int node, const char *name, const char *str) {
+  return fdt_setprop_string(fdt, node, name, str);
+}
+
+int fdt_add_property_u32(void *fdt, int node, const char *name, uint32_t val) {
+  fdt32_t v = cpu_to_fdt32(val);
+  return fdt_setprop(fdt, node, name, &v, sizeof(v));
+}
+
+#define FIXED_ARRAY_SIZE 128
+int fdt_add_property_u64_array(void *fdt, int node, const char *name, uint64_t *values, int len) {
+  fdt64_t temp[FIXED_ARRAY_SIZE];
+  if (len > FIXED_ARRAY_SIZE) {
+    // values are too many, we can't handle it
+    return -FDT_ERR_NOSPACE;
+  }
+  for (int i = 0; i < len; i++) {
+    temp[i] = cpu_to_fdt64(values[i]);
+  }
+  int ret = fdt_setprop(fdt, node, name, temp, sizeof(fdt64_t) * len);
+  return ret;
+}
+
+int fdt_add_property_u32_array(void *fdt, int node, const char *name, uint32_t *values, int len) {
+  fdt32_t temp[FIXED_ARRAY_SIZE];
+  if (len > FIXED_ARRAY_SIZE) {
+    // values are too many, we can't handle it
+    return -FDT_ERR_NOSPACE;
+  }
+  for (int i = 0; i < len; i++) {
+    temp[i] = cpu_to_fdt32(values[i]);
+  }
+  int ret = fdt_setprop(fdt, node, name, temp, sizeof(fdt32_t) * len);
+  return ret;
+}
+
 void fdt_add_virtio(void *fdt, const char *name, uint32_t spi_irq,
                     uint64_t address)
 {
