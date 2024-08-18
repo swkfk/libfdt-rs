@@ -396,3 +396,17 @@ int fdt_setup_pmu(void *fdt, const char *compatible, const uint32_t *spi_irq,
   }
   return r;
 }
+
+int fdt_find_node(void *fdt, const char *path) {
+  return fdt_path_offset(fdt, path);
+}
+
+char* fdt_get_property_string(void *fdt, const char *path, const char *prop, int *len) {
+  int node = fdt_path_offset(fdt, path);
+  if (node < 0) {
+    return NULL;
+  }
+  // 获取这个property的值，并返回
+  char *ret = fdt_getprop(fdt, node, prop, len);
+  return ret;
+}

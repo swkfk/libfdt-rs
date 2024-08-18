@@ -70,3 +70,14 @@ int fdt_setup_pmu(void *fdt, const char *compatible, const uint32_t *spi_irq,
 int fdt_overlay_apply(void *fdt, void *fdto);
 
 int fdt_open_into(const void *fdt, void *buf, int bufsize);
+
+/**
+ * fdt_get_property_string - Get a string property from a node
+ * @fdt: pointer to the device tree blob
+ * @path: path to the node
+ * @prop: property name
+ * @len: length of the target string, assigned by the function
+ */
+char* fdt_get_property_string(void *fdt, const char *path, const char *prop, int *len);
+
+int fdt_find_node(void *fdt, const char *path);
