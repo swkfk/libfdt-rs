@@ -55,6 +55,8 @@ int fdt_add_property_u64_array(void *fdt, int node, const char *name, uint64_t *
 
 int fdt_add_property_u32_array(void *fdt, int node, const char *name, uint32_t *values, int len);
 
+int fdt_add_property_null(void *fdt, int node, const char *name);
+
 void fdt_enlarge(void *fdt);
 
 uint64_t fdt_size(void *fdt);

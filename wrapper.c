@@ -78,6 +78,10 @@ int fdt_add_property_u32_array(void *fdt, int node, const char *name, uint32_t *
   return ret;
 }
 
+int fdt_add_property_null(void *fdt, int node, const char *name) {
+  return fdt_setprop(fdt, node, name, NULL, 0);
+}
+
 void fdt_add_virtio(void *fdt, const char *name, uint32_t spi_irq,
                     uint64_t address)
 {
